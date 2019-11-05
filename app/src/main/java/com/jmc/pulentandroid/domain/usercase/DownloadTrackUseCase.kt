@@ -1,6 +1,7 @@
 package com.jmc.pulentandroid.domain.usercase
 
 
+import com.jmc.pulentandroid.data.datasource.local.database.MusicDatabase
 import com.jmc.pulentandroid.domain.model.request.DownloadTrackRequest
 import com.jmc.pulentandroid.domain.model.response.DownloadTrackResponse
 import com.jmc.pulentandroid.domain.repository.StorageRepository
@@ -13,6 +14,7 @@ import java.io.File
  */
 
 open class DownloadTrackUseCase(
+    private val musicDatabase: MusicDatabase,
     private val storageRepository: StorageRepository
 
 ) : ResultUseCase<DownloadTrackRequest, DownloadTrackResponse>(
@@ -33,6 +35,7 @@ open class DownloadTrackUseCase(
         val downloadedFile =
             storageRepository.download(url = track.previewUrl, name = localFile.path)
 
+        musicDatabase.tracks.markAsDownloaded(trackId = track.trackId)
 
         return DownloadTrackResponse(track, downloadedFile)
     }
