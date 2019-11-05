@@ -15,7 +15,7 @@ import org.jetbrains.anko.support.v4.onRefresh
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ListAlbums : AppCompatActivity() {
+class ListAlbumsActivity : AppCompatActivity() {
 
     private val viewModel: ListAlbumsViewModel by viewModel()
 

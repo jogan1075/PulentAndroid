@@ -21,7 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.ui.searchAlbums.ListAlbums"></activity>
+        <activity android:name=".presentation.ui.searchSongs.DetailAlbumActivity"></activity>
+        <activity android:name=".presentation.ui.searchAlbums.ListAlbumsActivity" />
     </application>
 
 </manifest>
