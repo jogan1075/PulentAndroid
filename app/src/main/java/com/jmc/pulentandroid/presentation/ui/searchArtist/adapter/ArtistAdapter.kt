@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jmc.pulentandroid.R
 import com.jmc.pulentandroid.domain.model.Artist
+import com.jmc.pulentandroid.presentation.ui.searchArtist.ArtistAdapterManager
 import com.jmc.pulentandroid.utils.base.BaseAdapter
 import com.jmc.pulentandroid.utils.base.BaseViewHolder
 import com.jmc.pulentandroid.utils.onClickOnce
@@ -13,12 +14,9 @@ import com.jmc.pulentandroid.utils.onClickOnce
  * Created by Jmunoz on 2019-10-31.
  */
 open class ArtistAdapter(
-    private val manager: AdapterManager
+    private val manager: ArtistAdapterManager
 ) : BaseAdapter<Artist>() {
 
-    interface AdapterManager {
-        fun onArtistClicked(item: Artist, position: Int)
-    }
 
     override fun provideComparator() = compareBy(Artist::artistId)
 

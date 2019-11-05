@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.core.view.updateLayoutParams
 import com.jmc.pulentandroid.R
 import com.jmc.pulentandroid.domain.model.Album
+import com.jmc.pulentandroid.presentation.ui.searchAlbums.AlbumAdapterManeger
 import com.jmc.pulentandroid.utils.base.BaseAdapter
 import com.jmc.pulentandroid.utils.base.BaseViewHolder
 import com.jmc.pulentandroid.utils.onClickOnce
@@ -16,14 +17,10 @@ import kotlinx.android.synthetic.main.item_album.view.*
  */
 
 open class AlbumAdapter(
-    private val manager: AdapterManager
+    private val manager: AlbumAdapterManeger
 ) : BaseAdapter<Album>() {
 
-    interface AdapterManager {
-        fun onAlbumClicked(item: Album, position: Int)
 
-        fun provideImageLoader(): Picasso
-    }
 
     override fun provideComparator() = compareBy(Album::collectionId)
 

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jmc.pulentandroid.R
 import com.jmc.pulentandroid.presentation.modelView.TrackItem
+import com.jmc.pulentandroid.presentation.ui.searchSongs.TrackAdapterManager
 import com.jmc.pulentandroid.utils.base.BaseAdapter
 import com.jmc.pulentandroid.utils.base.BaseViewHolder
 import com.jmc.pulentandroid.utils.onClickOnce
@@ -14,13 +15,9 @@ import com.jmc.pulentandroid.utils.onClickOnce
 
 
 open class TrackAdapter(
-    private val manager: AdapterManager
+    private val manager: TrackAdapterManager
 ) : BaseAdapter<TrackItem>() {
 
-    interface AdapterManager {
-        fun onPlayTrackClicked(track: TrackItem, position: Int)
-        fun onPauseTrackClicked(track: TrackItem, position: Int)
-    }
 
     override fun provideComparator() = compareBy(TrackItem::trackId)
 

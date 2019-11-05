@@ -24,13 +24,13 @@ import org.jetbrains.anko.support.v4.startActivity
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(),ArtistAdapterManager {
 
     private val connectionManager: ConnectivityManager by inject()
 
     private val viewModel: MainViewModel by viewModel()
 
-    private val artistAdapter = ArtistAdapter(manager = ArtistManager())
+    private val artistAdapter = ArtistAdapter(this)
 
 
     override fun onCreateView(
@@ -123,10 +123,7 @@ class MainFragment : Fragment() {
         }
     }
 
-    inner class ArtistManager : ArtistAdapter.AdapterManager {
-        override fun onArtistClicked(item: Artist, position: Int) {
-            startActivity<ListAlbumsActivity>(EXTRA_ARTIST_ID to item.artistId)
-
-        }
+    override fun onArtistClicked(item: Artist, position: Int) {
+        startActivity<ListAlbumsActivity>(EXTRA_ARTIST_ID to item.artistId)
     }
 }

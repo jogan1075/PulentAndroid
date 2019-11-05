@@ -1,8 +1,8 @@
 package com.jmc.pulentandroid.presentation.ui.searchSongs
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.updateLayoutParams
 import com.jmc.pulentandroid.R
 import com.jmc.pulentandroid.domain.model.Track
@@ -16,12 +16,12 @@ import kotlinx.android.synthetic.main.activity_detail_album.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class DetailAlbumActivity : AppCompatActivity() {
+class DetailAlbumActivity : AppCompatActivity(), TrackAdapterManager {
 
 
     private val viewModel: DetailAlbumViewModel by viewModel()
 
-    private val trackAdapter = TrackAdapter(manager = TrackManager())
+    private val trackAdapter = TrackAdapter(this)
 
     private lateinit var mediaPlayerManager: MediaPlayerManager
 
@@ -150,43 +150,39 @@ class DetailAlbumActivity : AppCompatActivity() {
         }
     }
 
-    inner class TrackManager : TrackAdapter.AdapterManager {
-        override fun onPlayTrackClicked(track: TrackItem, position: Int) {
-            mediaPlayerManager.stop()
+    override fun onPlayTrackClicked(track: TrackItem, position: Int) {
+        mediaPlayerManager.stop()
 
-            if (track.isDownloaded)
-                trackAdapter.updateItem(position = position) {
-                    copy(
-                        isPlaying = true,
-                        isPaused = false,
-                        isDownloading = false
-                    )
-                }
-            else
-                trackAdapter.updateItem(position = position) {
-                    copy(
-                        isPlaying = false,
-                        isPaused = false,
-                        isDownloading = true
-                    )
-                }
-
-            viewModel.downloadTrack(track = track.let(TrackItem::toTrack))
-        }
-
-        override fun onPauseTrackClicked(track: TrackItem, position: Int) {
-            mediaPlayerManager.pause()
-
+        if (track.isDownloaded)
             trackAdapter.updateItem(position = position) {
                 copy(
-                    isPlaying = false,
-                    isPaused = true,
+                    isPlaying = true,
+                    isPaused = false,
                     isDownloading = false
                 )
             }
+        else
+            trackAdapter.updateItem(position = position) {
+                copy(
+                    isPlaying = false,
+                    isPaused = false,
+                    isDownloading = true
+                )
+            }
+
+        viewModel.downloadTrack(track = track.let(TrackItem::toTrack))
+    }
+
+    override fun onPauseTrackClicked(track: TrackItem, position: Int) {
+        mediaPlayerManager.pause()
+
+        trackAdapter.updateItem(position = position) {
+            copy(
+                isPlaying = false,
+                isPaused = true,
+                isDownloading = false
+            )
         }
-
-
     }
 
 

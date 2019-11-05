@@ -2,7 +2,9 @@ package com.jmc.pulentandroid.di
 
 import android.content.Context
 import android.net.ConnectivityManager
+import androidx.room.Room
 import com.jmc.pulentandroid.data.datasource.local.LocalCacheDataStore
+import com.jmc.pulentandroid.data.datasource.local.database.MusicDatabase
 import com.jmc.pulentandroid.data.datasource.remote.RemoteDataStore
 import com.jmc.pulentandroid.data.datasource.remote.api.iTunesSearchApi
 import com.jmc.pulentandroid.domain.repository.RemoteRepository
@@ -14,6 +16,7 @@ import com.jmc.pulentandroid.domain.usercase.SearchTracksUseCase
 import com.jmc.pulentandroid.presentation.ui.searchAlbums.ListAlbumsViewModel
 import com.jmc.pulentandroid.presentation.ui.searchArtist.MainViewModel
 import com.jmc.pulentandroid.presentation.ui.searchSongs.DetailAlbumViewModel
+import com.jmc.pulentandroid.utils.DATABASE_NAME
 import com.jmc.pulentandroid.utils.URL_API
 import com.squareup.picasso.Picasso
 import okhttp3.OkHttpClient
@@ -69,6 +72,18 @@ val appModule = module {
     single {
         Picasso.get()
     }
+
+
+    /* Database */
+
+    single {
+        Room.databaseBuilder(
+            androidContext(),
+            MusicDatabase::class.java,
+            DATABASE_NAME
+        ).build()
+    }
+
 
     /* View models */
     viewModel<MainViewModel>()
