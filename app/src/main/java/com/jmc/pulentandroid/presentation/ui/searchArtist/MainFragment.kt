@@ -11,7 +11,7 @@ import android.widget.SearchView
 import com.jmc.pulentandroid.R
 import com.jmc.pulentandroid.domain.model.Artist
 import com.jmc.pulentandroid.presentation.state.SearchState
-import com.jmc.pulentandroid.presentation.ui.searchAlbums.ListAlbums
+import com.jmc.pulentandroid.presentation.ui.searchAlbums.ListAlbumsActivity
 import com.jmc.pulentandroid.presentation.ui.searchArtist.adapter.ArtistAdapter
 import com.jmc.pulentandroid.utils.EXTRA_ARTIST_ID
 
@@ -125,7 +125,7 @@ class MainFragment : Fragment() {
 
     inner class ArtistManager : ArtistAdapter.AdapterManager {
         override fun onArtistClicked(item: Artist, position: Int) {
-            startActivity<ListAlbums>(EXTRA_ARTIST_ID to item.artistId)
+            startActivity<ListAlbumsActivity>(EXTRA_ARTIST_ID to item.artistId)
 
         }
     }
