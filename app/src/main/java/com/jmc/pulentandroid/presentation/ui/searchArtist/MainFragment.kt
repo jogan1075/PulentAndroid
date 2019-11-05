@@ -11,13 +11,16 @@ import android.widget.SearchView
 import com.jmc.pulentandroid.R
 import com.jmc.pulentandroid.domain.model.Artist
 import com.jmc.pulentandroid.presentation.state.SearchState
+import com.jmc.pulentandroid.presentation.ui.searchAlbums.ListAlbums
 import com.jmc.pulentandroid.presentation.ui.searchArtist.adapter.ArtistAdapter
+import com.jmc.pulentandroid.utils.EXTRA_ARTIST_ID
 
 import com.jmc.pulentandroid.utils.base.coroutines.Result
 import com.jmc.pulentandroid.utils.isNetworkAvailable
 import com.jmc.pulentandroid.utils.observe
 import kotlinx.android.synthetic.main.main_fragment.*
 import org.jetbrains.anko.support.v4.longToast
+import org.jetbrains.anko.support.v4.startActivity
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -116,14 +119,13 @@ class MainFragment : Fragment() {
             }
             else -> {
                 pBarSearch.visibility = View.GONE
-                longToast("se ha producido un error inesperado, intenta nuevamente!")
             }
         }
     }
 
     inner class ArtistManager : ArtistAdapter.AdapterManager {
         override fun onArtistClicked(item: Artist, position: Int) {
-//            startActivity<ArtistActivity>(EXTRA_ARTIST_ID to item.artistId)
+            startActivity<ListAlbums>(EXTRA_ARTIST_ID to item.artistId)
 
         }
     }

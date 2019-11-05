@@ -2,9 +2,11 @@ package com.jmc.pulentandroid.di
 
 import android.content.Context
 import android.net.ConnectivityManager
+import com.jmc.pulentandroid.presentation.ui.searchAlbums.ListAlbumsViewModel
 import com.jmc.pulentandroid.data.datasource.remote.RemoteDataStore
 import com.jmc.pulentandroid.data.datasource.remote.api.iTunesSearchApi
 import com.jmc.pulentandroid.domain.repository.RemoteRepository
+import com.jmc.pulentandroid.domain.usercase.SearchAlbumsUseCase
 import com.jmc.pulentandroid.domain.usercase.SearchArtistsUseCase
 import com.jmc.pulentandroid.presentation.ui.searchArtist.MainViewModel
 import com.jmc.pulentandroid.utils.URL_API
@@ -63,20 +65,18 @@ val appModule = module {
         Picasso.get()
     }
 
-
     /* View models */
     viewModel<MainViewModel>()
+    viewModel<ListAlbumsViewModel>()
 
 
     /* Factories */
 
     factoryBy<RemoteRepository, RemoteDataStore>()
 
-
     /* Use cases */
 
-
+    factory<SearchAlbumsUseCase>()
     factory<SearchArtistsUseCase>()
-
 
 }
