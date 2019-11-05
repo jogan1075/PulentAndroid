@@ -4,9 +4,11 @@ import com.jmc.pulentandroid.domain.model.Artist
 import com.jmc.pulentandroid.domain.repository.RemoteRepository
 import com.jmc.pulentandroid.data.datasource.remote.api.iTunesSearchApi
 import com.jmc.pulentandroid.domain.model.Album
+import com.jmc.pulentandroid.domain.model.Track
 import com.jmc.pulentandroid.utils.await
 import com.jmc.pulentandroid.utils.toAlbum
 import com.jmc.pulentandroid.utils.toArtist
+import com.jmc.pulentandroid.utils.toTrack
 
 
 /**
@@ -28,4 +30,10 @@ open class RemoteDataStore(
         return response.results.drop(1).map { it.toAlbum() }
     }
 
+
+    override suspend fun searchTracks(albumId: Long): List<Track> {
+        val response = iTunesSearchApi.lookupTracks(albumId).await()!!
+
+        return response.results.drop(1).map { it.toTrack() }
+    }
 }
