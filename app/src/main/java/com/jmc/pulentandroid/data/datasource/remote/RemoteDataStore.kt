@@ -3,7 +3,9 @@ package com.jmc.pulentandroid.data.datasource.remote
 import com.jmc.pulentandroid.domain.model.Artist
 import com.jmc.pulentandroid.domain.repository.RemoteRepository
 import com.jmc.pulentandroid.data.datasource.remote.api.iTunesSearchApi
+import com.jmc.pulentandroid.domain.model.Album
 import com.jmc.pulentandroid.utils.await
+import com.jmc.pulentandroid.utils.toAlbum
 import com.jmc.pulentandroid.utils.toArtist
 
 
@@ -18,6 +20,12 @@ open class RemoteDataStore(
         val response = iTunesSearchApi.searchArtists(term).await()!!
 
         return response.results.map { it.toArtist() }
+    }
+
+    override suspend fun searchAlbums(artistId: Long): List<Album> {
+        val response = iTunesSearchApi.lookupAlbums(artistId).await()!!
+
+        return response.results.drop(1).map { it.toAlbum() }
     }
 
 }

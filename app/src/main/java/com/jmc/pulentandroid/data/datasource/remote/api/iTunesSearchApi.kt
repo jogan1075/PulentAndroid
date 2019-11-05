@@ -1,5 +1,6 @@
 package com.jmc.pulentandroid.data.datasource.remote.api
 
+import com.jmc.pulentandroid.data.entity.api.AlbumEntity
 import com.jmc.pulentandroid.data.entity.api.ArtistEntity
 import com.jmc.pulentandroid.data.entity.api.SearchResult
 import retrofit2.Call
@@ -17,5 +18,9 @@ interface iTunesSearchApi {
         @Query("entity") entity: String = "musicArtist"
     ): Call<SearchResult<ArtistEntity>>
 
-
+    @GET("lookup")
+    fun lookupAlbums(
+        @Query("id") artistId: Long,
+        @Query("entity") entity: String = "album"
+    ): Call<SearchResult<AlbumEntity>>
 }
