@@ -6,22 +6,26 @@ import androidx.appcompat.app.AppCompatActivity
 import com.jmc.pulentandroid.R
 import com.jmc.pulentandroid.domain.model.Album
 import com.jmc.pulentandroid.presentation.ui.searchAlbums.adapter.AlbumAdapter
+import com.jmc.pulentandroid.presentation.ui.searchSongs.DetailAlbumActivity
+import com.jmc.pulentandroid.utils.EXTRA_ALBUM_ID
 import com.jmc.pulentandroid.utils.EXTRA_ARTIST_ID
+import com.jmc.pulentandroid.utils.EXTRA_URL_IMG
 import com.jmc.pulentandroid.utils.base.coroutines.Result
 import com.jmc.pulentandroid.utils.observe
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_list_albums.*
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.onRefresh
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ListAlbumsActivity : AppCompatActivity() {
+class ListAlbumsActivity : AppCompatActivity(), AlbumAdapterManeger {
 
     private val viewModel: ListAlbumsViewModel by viewModel()
 
     private val picasso: Picasso by inject()
 
-    private val albumAdapter = AlbumAdapter(manager = AlbumManager())
+    private val albumAdapter = AlbumAdapter(this)
 
     private val extraArtistId by lazy {
         intent.getLongExtra(EXTRA_ARTIST_ID, 0)
@@ -83,16 +87,14 @@ class ListAlbumsActivity : AppCompatActivity() {
         }
     }
 
-    inner class AlbumManager : AlbumAdapter.AdapterManager {
-        override fun onAlbumClicked(item: Album, position: Int) {
-//            startActivity<DetailAlbumActivity>(
-//                EXTRA_ALBUM_ID to item.collectionId,
-//                EXTRA_URL_IMG to item.artworkUrl100
-//            )
-        }
+    override fun onAlbumClicked(item: Album, position: Int) {
+        startActivity<DetailAlbumActivity>(
+            EXTRA_ALBUM_ID to item.collectionId,
+            EXTRA_URL_IMG to item.artworkUrl100
+        )
+    }
 
-        override fun provideImageLoader(): Picasso {
-            return picasso
-        }
+    override fun provideImageLoader(): Picasso {
+        return picasso
     }
 }
