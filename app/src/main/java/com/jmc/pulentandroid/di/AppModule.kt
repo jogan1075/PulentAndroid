@@ -4,9 +4,11 @@ import android.content.Context
 import android.net.ConnectivityManager
 import androidx.room.Room
 import com.jmc.pulentandroid.data.datasource.local.LocalCacheDataStore
+import com.jmc.pulentandroid.data.datasource.local.MusicLocalDataStore
 import com.jmc.pulentandroid.data.datasource.local.database.MusicDatabase
 import com.jmc.pulentandroid.data.datasource.remote.RemoteDataStore
 import com.jmc.pulentandroid.data.datasource.remote.api.iTunesSearchApi
+import com.jmc.pulentandroid.domain.repository.LocalRepository
 import com.jmc.pulentandroid.domain.repository.RemoteRepository
 import com.jmc.pulentandroid.domain.repository.StorageRepository
 import com.jmc.pulentandroid.domain.usercase.DownloadTrackUseCase
@@ -93,6 +95,7 @@ val appModule = module {
     /* Factories */
     factoryBy<RemoteRepository, RemoteDataStore>()
     factoryBy<StorageRepository, LocalCacheDataStore>()
+    factoryBy<LocalRepository, MusicLocalDataStore>()
 
     /* Use cases */
 

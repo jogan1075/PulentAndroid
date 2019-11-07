@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
+import androidx.appcompat.widget.SearchView
 import com.jmc.pulentandroid.R
 import com.jmc.pulentandroid.domain.model.Artist
 import com.jmc.pulentandroid.presentation.state.SearchState
@@ -24,7 +24,7 @@ import org.jetbrains.anko.support.v4.startActivity
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainFragment : Fragment(),ArtistAdapterManager {
+class MainFragment : Fragment(), ArtistAdapterManager {
 
     private val connectionManager: ConnectivityManager by inject()
 
@@ -59,9 +59,8 @@ class MainFragment : Fragment(),ArtistAdapterManager {
         }
     }
 
-    private fun searching(search: androidx.appcompat.widget.SearchView) {
-        search.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
-            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+    private fun searching(search: SearchView) {
+        search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 viewModel.searchArtists(query!!)
                 return false
